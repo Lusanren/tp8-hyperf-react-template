@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+vendor/
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+
+# Build outputs
+dist/
+build/
+runtime/
+*.log
+
+# IDE & OS
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db

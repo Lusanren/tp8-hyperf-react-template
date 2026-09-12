@@ -1,0 +1,4 @@
+/vendor/
+/.env
+/runtime/
+.phpunit.result.cache

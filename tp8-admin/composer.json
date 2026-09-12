@@ -1,0 +1,38 @@
+{
+    "name": "template/tp8-admin",
+    "description": "ThinkPHP 8 AI-Native Admin Backend",
+    "type": "project",
+    "keywords": [
+        "thinkphp",
+        "thinkphp8",
+        "framework"
+    ],
+    "homepage": "https://github.com",
+    "license": "MIT",
+    "require": {
+        "php": ">=8.1.0",
+        "topthink/framework": "^8.0.0",
+        "topthink/think-orm": "^3.0",
+        "firebase/php-jwt": "^6.8"
+    },
+    "require-dev": {
+        "symfony/phpunit-bridge": "^6.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "app\\": "app"
+        },
+        "psr-0": {
+            "": "extend/"
+        }
+    },
+    "config": {
+        "preferred-install": "dist"
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "@php think service:discover",
+            "@php think vendor:publish"
+        ]
+    }
+}

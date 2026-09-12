@@ -1,0 +1,81 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: tp8_hyperf_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password_123
+      MYSQL_DATABASE: tp8_admin_db
+      MYSQL_USER: tp8_user
+      MYSQL_PASSWORD: tp8_password_123
+      TZ: Asia/Shanghai
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./docker/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - app_net
+
+  redis:
+    image: redis:7-alpine
+    container_name: tp8_hyperf_redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - app_net
+
+  tp8-admin:
+    build:
+      context: ./tp8-admin
+      dockerfile: ../docker/tp8/Dockerfile
+    container_name: tp8_admin_app
+    restart: always
+    environment:
+      - APP_ENV=production
+    depends_on:
+      - mysql
+      - redis
+    networks:
+      - app_net
+
+  hyperf-service:
+    build:
+      context: ./hyperf-service
+      dockerfile: ../docker/hyperf/Dockerfile
+    container_name: hyperf_microservice
+    restart: always
+    environment:
+      - APP_ENV=prod
+    depends_on:
+      - mysql
+      - redis
+    networks:
+      - app_net
+
+  nginx:
+    build:
+      context: .
+      dockerfile: ./docker/web/Dockerfile
+    container_name: fullstack_nginx_gateway
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - tp8-admin
+      - hyperf-service
+    networks:
+      - app_net
+
+volumes:
+  mysql_data:
+  redis_data:
+
+networks:
+  app_net:
+    driver: bridge

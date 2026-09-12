@@ -1,0 +1,36 @@
+{
+    "name": "template/hyperf-service",
+    "type": "project",
+    "keywords": [
+        "php",
+        "swoole",
+        "hyperf",
+        "microservice"
+    ],
+    "description": "Hyperf 3.x AI & Streaming Microservice",
+    "license": "MIT",
+    "require": {
+        "php": ">=8.1",
+        "hyperf/engine": "^2.10",
+        "hyperf/framework": "~3.1.0",
+        "hyperf/http-server": "~3.1.0",
+        "hyperf/guzzle": "~3.1.0",
+        "hyperf/config": "~3.1.0",
+        "firebase/php-jwt": "^6.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        },
+        "files": []
+    },
+    "scripts": {
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-autoload-dump": [
+            "rm -rf runtime/container"
+        ],
+        "start": "php ./bin/hyperf.php start"
+    }
+}

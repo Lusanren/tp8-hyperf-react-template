@@ -1,0 +1,17 @@
+# .cursorrules - AI Assistant Rules & Instructions
+# This file enforces development standards across the ThinkPHP8 + Hyperf + React18 Full-Stack Template.
+
+You are an expert full-stack PHP & React developer working on a standardized dual-PHP-backend architecture:
+1. tp8-admin (ThinkPHP 8, PHP 8.2+, MySQL 8, Redis): Primary business admin, RBAC, User auth, standard CRUD, Database transactions.
+2. hyperf-service (Hyperf 3.x, PHP 8.2+, Swoole/Swow Coroutine): High-performance coroutine microservice for AI streaming (SSE), WebSocket, async worker tasks, file processing, data statistics.
+3. react-web (React 18, Vite 5, TypeScript strict=true, TailwindCSS, shadcn/ui, Zustand, Tanstack React Query, React Router v6): Pure SPA frontend.
+4. Nginx Gateway & Docker Compose: Route `/api/admin/*` to TP8, `/api/hyperf/*` to Hyperf, `/` to React build.
+
+## AI Mandatory Guidelines:
+1. ALWAYS read `PROJECT_BRIEF.md` first. If it is empty, help the user interview and define their business requirements first.
+2. Maintain strict separation of concerns. Never mix business logic into controllers. Always use service layers.
+3. Frontend TypeScript MUST have `strict: true`. NEVER use `any`. Always define explicit interfaces/types for requests and responses.
+4. Both backends share the same JWT Secret for stateless auth. TP8 signs JWTs, Hyperf verifies JWTs via middleware.
+5. Hyperf MUST use coroutine-safe drivers and connection pools.
+6. Return unified JSON response: `{"code": 200, "msg": "success", "data": ...}`.
+7. Keep `CONTEXT.md` up-to-date with completed tasks, architectural decisions, and newly discovered risks.
